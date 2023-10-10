@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import styled from "styled-components";
 import axios from "axios";
@@ -55,6 +55,15 @@ const VideoTemplate = ({ props }) => {
   const [transcribedText, setTranscribedText] = useState("");
   const [audioUrl, setAudioUrl] = useState();
   const [elevenLabsVoiceId, setElevenLabsVoiceId] = useState("");
+  const [name, setName] = useState("");
+  const [voiceUrl, setVoiceUrl] = useState();
+
+  // useEffect(() => {
+  //   setData((prevData) => ({
+  //     ...prevData,
+  //     voiceID: elevenLabsVoiceId,
+  //   }));
+  // }, [elevenLabsVoiceId]);
 
   const handleVideoUpload = async (e) => {
     const file = e.target.files[0];
@@ -70,7 +79,7 @@ const VideoTemplate = ({ props }) => {
     setIsLoading(true);
     try {
       const formData = new FormData();
-      console.log(data.video);
+      // console.log(data.video);
       formData.append("videoTemplate", data.video);
       // console.log(Object.fromEntries(formData));
       const response = await axios.post("/api/campaign/convert", formData, {
@@ -112,6 +121,53 @@ const VideoTemplate = ({ props }) => {
       });
       setIsLoading(false);
       console.log("Network Error:", error);
+    }
+  };
+
+  const sendVoiceHandler = async (e) => {
+    setIsLoading(true);
+    if (name.trim() === "") {
+      alert("Please enter a name.");
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `https://api.elevenlabs.io/v1/text-to-speech/${elevenLabsVoiceId}?optimize_streaming_latency=0&output_format=mp3_44100_128`,
+        {
+          text: name,
+          model_id: "eleven_monolingual_v1",
+          voice_settings: {
+            stability: 0,
+            similarity_boost: 0,
+            style: 0,
+            use_speaker_boost: true,
+          },
+        },
+        {
+          headers: {
+            "xi-api-key": "e327fdf320043677a512f1b0dade8403",
+            accept: "audio/mpeg",
+            "Content-Type": "application/json",
+          },
+          responseType: "arraybuffer",
+        }
+      );
+
+      const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      setVoiceUrl(audioUrl);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("error sending voice", error);
+      setIsLoading(false);
+    }
+  };
+
+  const playVoice = () => {
+    if (voiceUrl) {
+      const audio = new Audio(voiceUrl);
+      audio.play();
     }
   };
 
@@ -174,6 +230,28 @@ const VideoTemplate = ({ props }) => {
             <p>
               {elevenLabsVoiceId ? `Your VoiceId: ${elevenLabsVoiceId}` : null}
             </p>
+          </div>
+          <div className="row mb-3">
+            <div className="col-md-6 d-flex align-items-center">
+              <label htmlFor="name" className="form-label">
+                Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                maxLength="50"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <button
+                className="btn btn-primary m-3"
+                onClick={sendVoiceHandler}
+              >
+                {isLoading ? "Sending..." : "Send"}
+              </button>
+              <button className="btn btn-primary" onClick={playVoice}>
+                Play
+              </button>
+            </div>
           </div>
           <GridContainer>
             <GridItem

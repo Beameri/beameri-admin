@@ -3,7 +3,6 @@ import Button from "@material-ui/core/Button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import swal from "sweetalert";
 import { isAutheticated } from "src/auth.js";
 
 const Campaign = () => {
@@ -52,75 +51,6 @@ const Campaign = () => {
     };
     loadData();
   }, [currentPage, itemPerPage, campaignData]);
-
-  // const handleVarification = (id) => {
-  //     swal({
-  //         title: 'Are you sure?',
-  //         icon: 'warning',
-  //         buttons: { Yes: { text: 'Yes', value: true }, Cancel: { text: 'Cancel', value: 'cancel' } },
-  //     }).then((value) => {
-  //         if (value === true) {
-  //             axios
-  //                 .get(`/api/i/admin/verify/${id}`, {
-  //                     headers: {
-  //                         'Access-Control-Allow-Origin': '*',
-  //                         Authorization: `Bearer ${token}`,
-  //                     },
-  //                 })
-  //                 .then((res) => {
-  //                     swal({
-  //                         title: 'success',
-  //                         text: res.data.message ? res.data.message : 'Verified Successfully!',
-  //                         icon: 'success',
-  //                         button: 'ok',
-  //                         dangerMode: true,
-  //                     })
-  //                     setSuccess((prev) => !prev)
-  //                 })
-  //                 .catch((err) => {
-  //                     swal({
-  //                         title: 'Failled',
-  //                         text: 'Something went wrong!',
-  //                         icon: 'error',
-  //                         button: 'Retry',
-  //                         dangerMode: true,
-  //                     })
-  //                 })
-  //         }
-  //     })
-  // }
-  const handleDelete = (id) => {
-    // swal({
-    //   title: "Are you sure?",
-    //   icon: "error",
-    //   buttons: {
-    //     Yes: { text: "Yes", value: true },
-    //     Cancel: { text: "Cancel", value: "cancel" },
-    //   },
-    // }).then((value) => {
-    //   if (value === true) {
-    //     axios
-    //       .delete(`/api/businesses/delete/${id}`, {
-    //         headers: {
-    //           "Access-Control-Allow-Origin": "*",
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       })
-    //       .then((res) => {
-    //         setSuccess((prev) => !prev);
-    //       })
-    //       .catch((err) => {
-    //         swal({
-    //           title: "Warning",
-    //           text: "Something went wrong!",
-    //           icon: "error",
-    //           button: "Retry",
-    //           dangerMode: true,
-    //         });
-    //       });
-    //   }
-    // });
-  };
 
   const formatDate = (inputDate) => {
     const options = { year: "numeric", month: "short", day: "numeric" };
@@ -205,10 +135,8 @@ const Campaign = () => {
                       >
                         <tr>
                           <th className="text-start">Campaign Name </th>
-                          {/* <th className="text-start">Logo</th> */}
                           <th className="text-start">Campaign Type</th>
                           <th className="text-start">Recipients</th>
-                          {/* <th className="text-start">Status</th> */}
                           <th className="text-center">Action</th>
                           <th className="text-center">Launch Date</th>
                           <th className="text-center">Status</th>
@@ -233,40 +161,14 @@ const Campaign = () => {
                             return (
                               <tr key={idx}>
                                 <td className="text-start">{i.campaignName}</td>
-                                {/* {i.banner && i.banner ?
-                                                                    <td className="text-start">
-                                                                        <img src={i.banner.url} alt="No Image" height="50" />
-                                                                    </td> :
-                                                                    <p>No image!</p>
-                                                                } */}
 
                                 <td className="text-start">{i.campaignType}</td>
 
                                 <td className="text-start">
                                   {formatDate(i.createdAt)}
                                 </td>
-                                {/* <td className="text-start">
-                                                                    <button
-                                                                        style={{ color: 'white' }}
-                                                                        type="button"
-                                                                        className={`
-                                                                        
-                                    btn ${i?.verify === true ? 'btn-success' : 'btn-danger'} btn-sm
-                                    waves-effect waves-light
-                                    ms-2
-                                    
-                                  `}
-                                                                        disabled={i?.verify === true}
-                                                                        onClick={() => {
-                                                                            handleVarification(i._id)
-                                                                        }}
-                                                                    >
-                                                                        {i?.verify ? 'verified' : 'Not Verify'}
-                                                                    </button>
-                                                                </td> */}
-                                <td className=" text-center">
-                                  {/* <OverLayButton data={{ url: i?.url }} /> */}
 
+                                <td className=" text-center">
                                   <Link to={`/users/view/${i._id}`}>
                                     <button
                                       style={{ color: "white" }}

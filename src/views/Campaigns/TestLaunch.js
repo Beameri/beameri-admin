@@ -15,7 +15,6 @@ import {
 const TestLaunch = ({ props }) => {
   const { data, setData, handleView } = props;
   // const [recipients, setRecipients] = useState([{ name: "", phoneNumber: "" }]);
-  console.log("data", data);
 
   const addRecord = () => {
     setData((prevData) => ({
@@ -87,8 +86,6 @@ const TestLaunch = ({ props }) => {
     //       toast.error("Fill all contact details");
     //     }
   };
-
-  console.log(data);
 
   return (
     <div className="container">

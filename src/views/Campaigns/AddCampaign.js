@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { Button } from '@mui/material'
-import axios from "axios";
 
-import { Link, useNavigate } from "react-router-dom";
 import {
   CCard,
   CCardBody,
@@ -12,8 +9,6 @@ import {
   CRow,
 } from "@coreui/react";
 
-import Button from "@material-ui/core/Button";
-
 import { isAutheticated } from "src/auth";
 import BasicDetaiils from "./BasicDetaiils.js";
 import ContactDetails from "./ContactDetails.js";
@@ -22,10 +17,10 @@ import Videos from "./Video.js";
 import TestLaunch from "./TestLaunch.js";
 import Status from "./Status.js";
 import VideoTemplate from "./VideoTemplate.js";
+import Voices from "./Voices.js";
 
 const AddCampaign = () => {
   const token = isAutheticated();
-  const [productId, setProductId] = useState("");
   const [viewState, setViewState] = useState(1);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -45,6 +40,7 @@ const AddCampaign = () => {
         status: ["delivered"],
       },
     ],
+    voiceID: "",
   });
 
   // console.log(data)
@@ -95,12 +91,15 @@ const AddCampaign = () => {
                   <Preview props={{ data, setData, handleView }} />
                 )}
                 {viewState === 5 && (
-                  <Videos props={{ data, setData, handleView }} />
+                  <Voices props={{ data, setData, handleView }} />
                 )}
                 {viewState === 6 && (
-                  <TestLaunch props={{ data, setData, handleView }} />
+                  <Videos props={{ data, setData, handleView }} />
                 )}
                 {viewState === 7 && (
+                  <TestLaunch props={{ data, setData, handleView }} />
+                )}
+                {viewState === 8 && (
                   <Status props={{ data, setData, handleView }} />
                 )}
               </CCardBody>
@@ -165,7 +164,7 @@ const AddCampaign = () => {
                     type="button"
                     onClick={() => handleView(5)}
                   >
-                    Videos (Internal Process)
+                    Voices
                   </button>
                   <button
                     className={
@@ -176,7 +175,7 @@ const AddCampaign = () => {
                     type="button"
                     onClick={() => handleView(6)}
                   >
-                    Test & Launch
+                    Videos (Internal Process)
                   </button>
                   <button
                     className={
@@ -186,6 +185,17 @@ const AddCampaign = () => {
                     }
                     type="button"
                     onClick={() => handleView(7)}
+                  >
+                    Test & Launch
+                  </button>
+                  <button
+                    className={
+                      viewState === 8
+                        ? "btn btn-light"
+                        : "btn btn-info text-white"
+                    }
+                    type="button"
+                    onClick={() => handleView(8)}
                   >
                     Status
                   </button>

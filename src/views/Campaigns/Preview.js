@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
 import { isAutheticated } from "src/auth";
+import toast from "react-hot-toast";
 
 const Preview = ({ props }) => {
-  const token = isAutheticated();
   const { data, handleView, setData } = props;
-  const [loading, setLoading] = useState(false);
   const [campaignData, setCampaignData] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -22,28 +20,6 @@ const Preview = ({ props }) => {
       toast.error("Fill all contact details");
     }
   };
-
-  const getCampaign = () => {
-    axios
-      .get(`/api/campaign/getAll`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setCampaignData(res.data?.campaigns);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    getCampaign();
-  }, []);
 
   return (
     <React.Fragment>
