@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { isAutheticated } from "src/auth.js";
 
@@ -10,6 +10,7 @@ const Faqs = () => {
   const [faqsData, setFaqsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(10);
+  const navigate = useNavigate();
 
   const handleShowEntries = (e) => {
     setCurrentPage(1);
@@ -37,7 +38,6 @@ const Faqs = () => {
         setFaqsData(response.data.faqs);
         setLoading(false);
       } catch (error) {
-        // Handle any errors here
         console.log("Error fetching FAQs:", error);
         setLoading(false);
       }
@@ -45,6 +45,36 @@ const Faqs = () => {
 
     fetchFaqs();
   }, []);
+
+  const handleEdit = (faqId) => {
+    navigate(`/faqs/edit/${faqId}`);
+  };
+
+  const handleDelete = async (faqId) => {
+    if (window.confirm("Are you sure you want to delete this record?")) {
+      try {
+        await axios.delete(`http://localhost:8000/api/faqs/delete/${faqId}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setFaqsData((prevFaqsData) => {
+          return prevFaqsData.filter((faq) => faq._id !== faqId);
+        });
+      } catch (error) {
+        console.log("Error deleting FAQ:", error);
+        swal({
+          title: "Warning",
+          text: error.message,
+          icon: "error",
+          button: "Close",
+          dangerMode: true,
+        });
+      }
+    }
+  };
 
   return (
     <div className="main-content">
@@ -61,7 +91,7 @@ const Faqs = () => {
                   "
               >
                 <div style={{ fontSize: "22px" }} className="fw-bold">
-                  Faqs
+                  Frequently Asked Questions
                 </div>
 
                 <div className="page-title-right">
@@ -75,7 +105,7 @@ const Faqs = () => {
                         textTransform: "capitalize",
                       }}
                     >
-                      Add Faqs
+                      Add FAQ
                     </Button>
                   </Link>
                 </div>
@@ -95,11 +125,7 @@ const Faqs = () => {
                             style={{ width: "10%" }}
                             name=""
                             onChange={(e) => handleShowEntries(e)}
-                            className="
-                                select-w
-                                custom-select custom-select-sm
-                                form-control form-control-sm
-                              "
+                            className="select-w custom-select custom-select-sm form-control form-control-sm"
                           >
                             <option value="10">10</option>
                             <option value="25">25</option>
@@ -126,6 +152,8 @@ const Faqs = () => {
                           <th className="text-start">Question</th>
                           <th className="text-start">Answer</th>
                           <th className="text-center">Created On</th>
+                          <th className="text-center"></th>
+                          <th className="text-center"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -144,6 +172,22 @@ const Faqs = () => {
                                 <td className="text-start">{faq.answer}</td>
                                 <td className="text-center">
                                   {formatDate(faq.createdAt)}
+                                </td>
+                                <td className="text-center">
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() => handleEdit(faq._id)}
+                                  >
+                                    Edit
+                                  </button>
+                                </td>
+                                <td className="text-center">
+                                  <button
+                                    className="btn btn-danger"
+                                    onClick={() => handleDelete(faq._id)}
+                                  >
+                                    Delete
+                                  </button>
                                 </td>
                               </tr>
                             );

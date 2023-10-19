@@ -34,8 +34,7 @@ import Products from "./views/Products/Products";
 //Faqs
 import Faqs from "./views/Faqs/Faqs.js";
 import AddFaqs from "./views/Faqs/AddFaqs";
-// import EditBusiness from "./views/Business/EditBusiness.js";
-// import Products from "./views/Products/Products";
+import EditFaq from "./views/Faqs/EditFaq.js";
 //product
 import AddProduct from "./views/Products/AddProduct";
 import EditProduct from "./views/Products/EditProduct";
@@ -159,9 +158,9 @@ const routes = [
     element: AddFaqs,
   },
   {
-    path: "/users/edit/:id",
+    path: "/faqs/edit/:id",
     name: "Edit faqs",
-    element: EditBusiness,
+    element: EditFaq,
   },
   {
     path: "/users/view/:id",
