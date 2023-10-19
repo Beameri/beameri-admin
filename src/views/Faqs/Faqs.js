@@ -26,15 +26,12 @@ const Faqs = () => {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/faqs/getAll",
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get("/api/faqs/getAll", {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setFaqsData(response.data.faqs);
         setLoading(false);
       } catch (error) {

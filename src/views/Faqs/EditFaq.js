@@ -17,15 +17,12 @@ const EditFaq = () => {
   useEffect(() => {
     const fetchFaqData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/faqs/get/${params.id}`,
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`/api/faqs/get/${params.id}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setFaqData({
           question: response.data.faq.question,
@@ -47,7 +44,7 @@ const EditFaq = () => {
       };
 
       const response = await axios.put(
-        `http://localhost:8000/api/faqs/update/${params.id}`,
+        `/api/faqs/update/${params.id}`,
         dataToUpdate,
         {
           headers: {

@@ -33,16 +33,12 @@ const AddFaqs = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/faqs/add",
-        data,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post("/api/faqs/add", data, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.data.success) {
         console.log("FAQ added successfully");
