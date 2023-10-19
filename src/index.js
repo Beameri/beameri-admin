@@ -27,12 +27,7 @@ const setupAxios = () => {
 setupAxios();
 const domNode = document.getElementById("root");
 const root = createRoot(domNode);
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <App />
-//   </Provider>,
-//   document.getElementById("root")
-// );
+
 root.render(
   <Provider store={store}>
     <App />
