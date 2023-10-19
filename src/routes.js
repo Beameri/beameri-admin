@@ -31,6 +31,11 @@ import Businesses from "./views/Business/Businesses.js";
 import AddBusiness from "./views/Business/AddBusiness.js";
 import EditBusiness from "./views/Business/EditBusiness.js";
 import Products from "./views/Products/Products";
+//Faqs
+import Faqs from "./views/Faqs/Faqs.js";
+import AddFaqs from "./views/Faqs/AddFaqs";
+// import EditBusiness from "./views/Business/EditBusiness.js";
+// import Products from "./views/Products/Products";
 //product
 import AddProduct from "./views/Products/AddProduct";
 import EditProduct from "./views/Products/EditProduct";
@@ -142,6 +147,28 @@ const routes = [
     name: "view healthcare providers",
     element: ViewHealthCareProvider,
   },
+  // Faqs
+  {
+    path: "//faqs",
+    name: "faqs",
+    element: Faqs,
+  },
+  {
+    path: "//faqs/add",
+    name: "Add faqs",
+    element: AddFaqs,
+  },
+  {
+    path: "/users/edit/:id",
+    name: "Edit faqs",
+    element: EditBusiness,
+  },
+  {
+    path: "/users/view/:id",
+    name: "view faqs",
+    element: ViewHealthCareProvider,
+  },
+  // campaingns
   {
     path: "//campaigns",
     name: "campaigns",
