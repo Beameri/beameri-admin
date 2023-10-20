@@ -63,7 +63,7 @@ const EditFaq = () => {
         button: "Close",
       });
       navigate("/faqs");
-      console.log("FAQ updated successfully");
+      // console.log("FAQ updated successfully");
     } catch (error) {
       console.log("Error updating FAQ:", error);
       swal({

@@ -62,7 +62,7 @@ import AddInformations from "./views/Informations/AddInformations";
 
 import ApplicationName from "./views/configuration/ApplicationName";
 import CopyrightMessage from "./views/configuration/CopyrightMessage";
-import ContactRequests from "./views/ContactRequests/ContactRequests";
+import Contacts from "./views/ContactRequests/ContactRequests";
 import AddContactRequest from "./views/ContactRequests/AddContactRequest";
 import Testimonials from "./views/Testimonials/Testimonials";
 import AddTestimonial from "./views/Testimonials/AddTestimonial";
@@ -71,6 +71,7 @@ import Policies from "./views/configuration/Policies/Policies";
 ////purpose
 import Purpose from "./views/configuration/Purpose/Purpose";
 import AddPurpose from "./views/configuration/Purpose/AddPurpose";
+
 //language
 import Languages from "./views/configuration/Language/Languages";
 import AddLanguage from "./views/configuration/Language/AddLanguage";
@@ -101,6 +102,8 @@ const routes = [
   { path: "/product/add", name: "Add products", element: AddProduct },
   { path: "/product/edit/:id", name: "Edit products", element: EditProduct },
   { path: "/product/view/:id", name: "view products", element: ViewProduct },
+  // contact
+  { path: "/contact", name: "contact", element: Contacts },
   //Departure
   { path: "/departures", name: "Departures", element: Departures },
   { path: "/departure/add", name: "Add Departure", element: AddDeparture },
@@ -190,18 +193,7 @@ const routes = [
   },
 
   // { path: '/franchisee/view/:id', name: 'view franchisee', element: ViewFra },
-  //Contact Requests
 
-  {
-    path: "/contact/request",
-    name: "Contact Requests",
-    element: ContactRequests,
-  },
-  {
-    path: "/contact/request/new",
-    name: "AddContact Request",
-    element: AddContactRequest,
-  },
   // { path: '/complaint/view/:id', name: 'view Complain', element: ViewComplaint },
   //Complaints
   { path: "/testimonials", name: "Testimonials", element: Testimonials },

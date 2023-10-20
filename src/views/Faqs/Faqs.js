@@ -50,7 +50,7 @@ const Faqs = () => {
   const handleDelete = async (faqId) => {
     if (window.confirm("Are you sure you want to delete this record?")) {
       try {
-        await axios.delete(`http://localhost:8000/api/faqs/delete/${faqId}`, {
+        await axios.delete(`/api/faqs/delete/${faqId}`, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             Authorization: `Bearer ${token}`,

@@ -41,7 +41,7 @@ const AddFaqs = () => {
       });
 
       if (response.data.success) {
-        console.log("FAQ added successfully");
+        // console.log("FAQ added successfully");
         setLoading(false);
         swal({
           title: "Added",
