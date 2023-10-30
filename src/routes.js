@@ -87,6 +87,7 @@ import AddNewAppointment from "./views/Appointments/AddNewAppointment";
 import ViewHealthCareProvider from "./views/Business/ViewHealthCareProvider";
 import Campaign from "./views/Campaigns/Campaign.js";
 import AddCampaign from "./views/Campaigns/AddCampaign.js";
+import Customers from "./views/Customer/customer.js";
 const routes = [
   { path: "/", exact: true, name: "Home" },
   {
@@ -148,6 +149,12 @@ const routes = [
     path: "/users/view/:id",
     name: "view healthcare providers",
     element: ViewHealthCareProvider,
+  },
+  // customers
+  {
+    path: "//customers",
+    name: "customers",
+    element: Customers,
   },
   // Faqs
   {
